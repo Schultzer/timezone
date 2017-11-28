@@ -2,18 +2,32 @@ defmodule TimezoneTest do
   use ExUnit.Case
   doctest Timezone
 
-  import Timezone
-
-  test "lookup/1 returns {status, map}" do
-    expected = "Asia/Bangkok"
-    {:ok, result} = Timezone.lookup(13.739626, 100.560907)
-    assert expected == result["timeZoneId"]
+  describe "lookup/2" do
+    test "with valid params" do
+      expected = {:ok, "Asia/Bangkok"}
+      assert expected == Timezone.lookup(13.739626, 100.560907)
+      assert expected == Timezone.lookup("13.739626", "100.560907")
+      assert expected == Timezone.lookup(Decimal.new(13.739626), Decimal.new("100.560907"))
+      assert expected == Timezone.lookup(Decimal.new("13.739626"), Decimal.new(100.560907))
+    end
+    test "with invalid params" do
+      assert {:error, "Unkownen latitude or longtitude error [] []"} == Timezone.lookup([], [])
+    end
   end
 
-  test "lookup!/1 returns timezone" do
-    expect = "Asia/Bangkok"
-    result = Timezone.lookup!(13.739626, 100.560907)
-    assert expect == result
+  describe "lookup!/2" do
+    test "with valid params" do
+      expected = "Asia/Bangkok"
+      assert expected == Timezone.lookup!(13.739626, 100.560907)
+      assert expected == Timezone.lookup!("13.739626", "100.560907")
+      assert expected == Timezone.lookup!(Decimal.new(13.739626), Decimal.new("100.560907"))
+      assert expected == Timezone.lookup!(Decimal.new("13.739626"), Decimal.new(100.560907))
+    end
+    test "with invalid params" do
+      assert_raise RuntimeError,  "Unkownen latitude or longtitude error [] []", fn ->
+        Timezone.lookup!([], [])
+      end
+    end
   end
 
 end
