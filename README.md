@@ -1,47 +1,42 @@
 # Timezone
-Google Maps Time Zone API
 
-geocodes
-|> lookup
-...
-Timezone
+[![CircleCI](https://circleci.com/gh/Schultzer/timezone.svg?style=svg)](https://circleci.com/gh/Schultzer/timezone)
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `timezone` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [{:timezone, "~> 0.1.0"}]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/timezone](https://hexdocs.pm/timezone).
-
-
-## Configuration
-
-```elixir
-config :timezone, api_key: System.get_env("GOOGLE_API_KEY"),
-```
-
+Simple wrapper around Google Maps Time Zone API
 
 ## Examples
 
 ```elixir
-{:ok, result} = Timezone.lookup(13.739626, 100.560907)
-{:ok, result} = Timezone.lookup("13.739626", "100.560907")
-{:ok, result} = Timezone.lookup(%{lat: 13.739626, lng: 100.560907})
-{:ok, result} = Timezone.lookup(%{lat: "13.739626", lng: "100.560907"})
+  iex> Timezone.lookup(13.739626, 100.560907)
+  {:ok, "Asia/Bangkok"}
 
-"Asia/Bangkok" = Timezone.lookup!(13.739626, 100.560907)
-"Asia/Bangkok" = Timezone.lookup!("13.739626", "100.560907")
-"Asia/Bangkok" = Timezone.lookup!(%{lat: 13.739626, lng: 100.560907})
-"Asia/Bangkok" = Timezone.lookup!(%{lat: "13.739626", lng: "100.560907"})
+  iex> Timezone.lookup("13.739626", "100.560907")
+  {:ok, "Asia/Bangkok"}
+
+  iex> Timezone.lookup(Decimal.new(13.739626), Decimal.new("100.560907"))
+  {:ok, "Asia/Bangkok"}
 ```
+
+## Installation
+
+```elixir
+def deps do
+  [
+    {:timezone, "~> 0.2"}
+  ]
+end
+```
+
+## Configuration
+
+```elixir
+config :timezone,
+  api_key: System.get_env("GOOGLE_API_KEY")
+```
+
+## Documentation
+
+[https://hexdocs.pm/timezone](https://hexdocs.pm/timezone)
 
 ## LICENSE
 
