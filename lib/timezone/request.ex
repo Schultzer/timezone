@@ -8,7 +8,7 @@ defmodule Timezone.Request do
   def fetch(lat, lng, api_key \\ Application.get_env(:timezone, :api_key))
   def fetch(_lat, _lng, nil), do: {:error, "Google Map Timezone API key is not configured."}
   def fetch(lat, lng, api_key) do
-    case Application.get_env(:timezone, :base_api_url) do
+    case Application.get_env(:timezone, :base_api_url, "https://maps.googleapis.com") do
       nil -> {:ok, nil}
       url ->  url <> "/maps/api/timezone/json"
               |> parse_from_url(location: lat <> "," <> lng, timestamp: :erlang.system_time(100), key: api_key)
