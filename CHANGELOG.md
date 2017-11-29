@@ -1,5 +1,10 @@
 # Changelog
 
+## Timezone v0.2.2 November 28, 2017
+
+### Bug fixes
+- Return preconfigured base api url if not configured
+
 ## Timezone v0.2.1 November 28, 2017
 
 ### Bug fixes
