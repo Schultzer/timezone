@@ -5,7 +5,9 @@ defmodule Timezone.Request do
 
   @doc false
   @spec fetch(String.t, String.t) :: {:ok, String.t} | {:error, String.t} | {:error, HTTPoison.Error.t} | {:error, :invalid} | {:error, {:invalid, String.t}}
-  def fetch(lat, lng, api_key \\ Application.get_env(:timezone, :api_key)) do
+  def fetch(lat, lng, api_key \\ Application.get_env(:timezone, :api_key))
+  def fetch(_lat, _lng, nil), do: {:error, "Google Map Timezone API key is not configured."}
+  def fetch(lat, lng, api_key) do
     case Application.get_env(:timezone, :base_api_url) do
       nil -> {:ok, nil}
       url ->  url <> "/maps/api/timezone/json"

@@ -30,4 +30,15 @@ defmodule TimezoneTest do
     end
   end
 
+  describe "fetch/3" do
+    test "with valid params" do
+      expected = {:ok, "Asia/Bangkok"}
+      assert expected == Timezone.Request.fetch("13.739626", "100.560907")
+    end
+    test "with invalid params" do
+      expected = {:error, "Google Map Timezone API key is not configured."}
+      assert expected == Timezone.Request.fetch("13.739626", "100.560907", nil)
+    end
+  end
+
 end
